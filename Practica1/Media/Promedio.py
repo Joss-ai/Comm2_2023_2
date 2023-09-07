@@ -5,7 +5,9 @@
 # SPDX-License-Identifier: GPL-3.0
 #
 # GNU Radio Python Flow Graph
-# Title: Not titled yet
+# Title: PruebaBloqueMean
+# Author: Jose_Algarin
+# Copyright: UIS
 # GNU Radio version: 3.10.1.1
 
 from packaging.version import Version as StrictVersion
@@ -32,7 +34,7 @@ import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
-import default_epy_block_0 as epy_block_0  # embedded python block
+import Promedio_epy_block_0 as epy_block_0  # embedded python block
 
 
 
@@ -41,9 +43,9 @@ from gnuradio import qtgui
 class Promedio(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Not titled yet", catch_exceptions=True)
+        gr.top_block.__init__(self, "PruebaBloqueMean", catch_exceptions=True)
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Not titled yet")
+        self.setWindowTitle("PruebaBloqueMean")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
@@ -83,7 +85,7 @@ class Promedio(gr.top_block, Qt.QWidget):
             1024, #size
             samp_rate, #samp_rate
             "", #name
-            1, #number of inputs
+            2, #number of inputs
             None # parent
         )
         self.qtgui_time_sink_x_0.set_update_time(0.10)
@@ -114,7 +116,7 @@ class Promedio(gr.top_block, Qt.QWidget):
             -1, -1, -1, -1, -1]
 
 
-        for i in range(1):
+        for i in range(2):
             if len(labels[i]) == 0:
                 self.qtgui_time_sink_x_0.set_line_label(i, "Data {0}".format(i))
             else:
@@ -136,6 +138,7 @@ class Promedio(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.blocks_throttle_0, 0), (self.epy_block_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.qtgui_time_sink_x_0, 1))
         self.connect((self.blocks_vector_source_x_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.epy_block_0, 0), (self.qtgui_time_sink_x_0, 0))
 
