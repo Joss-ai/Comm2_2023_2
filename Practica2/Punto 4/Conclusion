@@ -1,0 +1,1 @@
+Para la transmisión correcta de datos es necesario que el valor de desempaquetado sea menor o igual que la mitad del valor de interpolación y throttle (SPS) debido a que el desampaquetado envia dos veces el tamaño de K de bits.
