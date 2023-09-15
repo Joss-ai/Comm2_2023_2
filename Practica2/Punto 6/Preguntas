@@ -1,0 +1,7 @@
+	c. Esto se debe a caracteristicas propias del tipo de información de las señales, de forma "simple" los bits de desempaquetado de una señal de audio son un poco más aleatorias que los de una imagen debido a que la variación que aparece de paquete en paquete puede ser más suave entre pixel y pixel de una imagen que entre cada paquete de un audio.
+	f. Coincide, se observa una señal constante de valor muy pequeño, cercano a 5uW/Hz para todo el espectro de la señal. Debido a que el ruido sí es una "Señal con espectro infinito.
+	i. Es el resultado del producto de RB * SBS. Adjuntar imagen i.
+	l. El ancho de banda representa 2 veces el RB y si además se conoce el número de lobulos, el valor de la frecuencia de muestreo es igual a Nlobulos*Rb. Adjuntar imagen L.
+	o. Sps = 1, debido a que es el momento en que la señal es más parecida a una señal de ruido variando de 1 a -1. Adjuntar imagen O.
+	r. h de forma [1,1,1,1,-1,-1,-1,-1]. Imagen L1 y L2.
+	

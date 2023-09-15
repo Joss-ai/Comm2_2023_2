@@ -49,7 +49,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: 32e3
   states:
     bus_sink: false
     bus_source: false
@@ -73,7 +73,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: np.array([1,1,1,1,1,1,1,1])
+    value: np.array([1,-1,1,-1,1,-1,1,-1])
   states:
     bus_sink: false
     bus_source: false
@@ -90,7 +90,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [778, 14]
+    coordinate: [760, 12.0]
     rotation: 0
     state: enabled
 - name: Menu
@@ -133,7 +133,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: -1./2.
+    const: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -195,7 +195,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [256, 172.0]
+    coordinate: [272, 172.0]
     rotation: 0
     state: true
 - name: blocks_complex_to_mag_squared_0
@@ -242,7 +242,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '2.'
+    const: '1.'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -251,7 +251,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 140.0]
+    coordinate: [600, 140.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_1
@@ -332,14 +332,14 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    k: '2'
+    k: '8'
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 276.0]
+    coordinate: [208, 260.0]
     rotation: 0
     state: true
 - name: epy_block_0
@@ -400,7 +400,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [865, 15]
+    coordinate: [864, 12.0]
     rotation: 0
     state: true
 - name: interp_fir_filter_xxx_0
@@ -419,7 +419,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [784, 164.0]
+    coordinate: [776, 164.0]
     rotation: 0
     state: enabled
 - name: note_0
@@ -696,7 +696,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [364.0, 248]
+    coordinate: [460.0, 256]
     rotation: 270
     state: true
 - name: virtual_sink_0_1_0
@@ -743,7 +743,7 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    stream_id: p5
+    stream_id: p4
   states:
     bus_sink: false
     bus_source: false
