@@ -1,0 +1,1 @@
+Para la transmisión correcta de datos de imagen es recomendado 8 bits para desempaquetado, debido a que este es el estandar de codificación en la mayoría de formatos. Conforme se aumente el valor de muestras por segunda se mejora la calidad de la señal de la PSD.

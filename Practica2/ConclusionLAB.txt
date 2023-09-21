@@ -1,0 +1,3 @@
+En las pruebas realizadas y según las evidencias tomadas en las capturas se puede ver que al aumentar la longitud de "h" aumenta también la tasa de muestreo y el filtro de interpolación FIR aumenta la cantidad de muestras con las cuales realiza el proceso de interpolación, debido a estos dos parámetros se puede apreciar que la señal tiene mayor calidad para lo cual con la PSD ahora es posible encontrar la potencia de dicha señal y su ancho de banda, el cual también aumenta en función de h.
+
+Con respecto a la señal de ruido no es posible describir su PSD o su ancho de banda, lo que me permite determinar que lo que hace que a la primera señal si pueda caracterizarla es que aunque la señal sea aleatoria es una señal aleatoria binaria.
