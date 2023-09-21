@@ -73,7 +73,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: np.array([1,-1,1,-1,1,-1,1,-1])
+    value: np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
   states:
     bus_sink: false
     bus_source: false
@@ -133,7 +133,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: '0'
+    const: '-0.5'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -160,7 +160,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 260.0]
+    coordinate: [912, 356.0]
     rotation: 0
     state: true
 - name: blocks_add_xx_0
@@ -195,7 +195,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [272, 172.0]
+    coordinate: [320, 188.0]
     rotation: 0
     state: true
 - name: blocks_complex_to_mag_squared_0
@@ -235,14 +235,14 @@ blocks:
     bus_structure: null
     coordinate: [16, 156.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    const: '1.'
+    const: '2.'
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -323,7 +323,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [960, 172.0]
+    coordinate: [928, 140.0]
     rotation: 0
     state: true
 - name: blocks_unpack_k_bits_bb_0
@@ -339,7 +339,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [208, 260.0]
+    coordinate: [200, 188.0]
     rotation: 0
     state: true
 - name: epy_block_0
@@ -419,7 +419,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [776, 164.0]
+    coordinate: [736, 132.0]
     rotation: 0
     state: enabled
 - name: note_0
@@ -696,7 +696,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [460.0, 256]
+    coordinate: [420.0, 264]
     rotation: 270
     state: true
 - name: virtual_sink_0_1_0
@@ -709,7 +709,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1124.0, 264]
+    coordinate: [1076.0, 216]
     rotation: 270
     state: enabled
 - name: virtual_sink_0_1_0_0
@@ -722,7 +722,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1060.0, 336]
+    coordinate: [1044.0, 448]
     rotation: 270
     state: enabled
 - name: virtual_source_0
