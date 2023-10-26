@@ -6,7 +6,7 @@
 #
 # GNU Radio Python Flow Graph
 # Title: Not titled yet
-# GNU Radio version: 3.10.5.1
+# GNU Radio version: 3.10.1.1
 
 from packaging.version import Version as StrictVersion
 
@@ -83,9 +83,8 @@ class video_homero(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-
         self.qtgui_time_sink_x_0_0_0 = qtgui.time_sink_f(
-            (32//Nbps), #size
+            32//Nbps, #size
             Rs, #samp_rate
             "", #name
             1, #number of inputs
@@ -94,7 +93,7 @@ class video_homero(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_0_0.set_update_time(0.10)
         self.qtgui_time_sink_x_0_0_0.set_y_axis(-1, 1)
 
-        self.qtgui_time_sink_x_0_0_0.set_y_label('Amplitude', "")
+        self.qtgui_time_sink_x_0_0_0.set_y_label('Amplitude modulated and escalated', "")
 
         self.qtgui_time_sink_x_0_0_0.enable_tags(True)
         self.qtgui_time_sink_x_0_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
@@ -133,7 +132,7 @@ class video_homero(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_0_0_win)
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_f(
-            (32//Nbps), #size
+            32//Nbps, #size
             Rs, #samp_rate
             "", #name
             1, #number of inputs
@@ -142,7 +141,7 @@ class video_homero(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_0.set_update_time(0.10)
         self.qtgui_time_sink_x_0_0.set_y_axis(-1, 1)
 
-        self.qtgui_time_sink_x_0_0.set_y_label('Amplitude', "")
+        self.qtgui_time_sink_x_0_0.set_y_label('Amplitude modulated', "")
 
         self.qtgui_time_sink_x_0_0.enable_tags(True)
         self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
@@ -190,7 +189,7 @@ class video_homero(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0.set_update_time(0.10)
         self.qtgui_time_sink_x_0.set_y_axis(-1, 1)
 
-        self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
+        self.qtgui_time_sink_x_0.set_y_label('Amplitude sin modulación', "")
 
         self.qtgui_time_sink_x_0.enable_tags(True)
         self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
@@ -229,7 +228,7 @@ class video_homero(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_win)
         self.blocks_repack_bits_bb_0 = blocks.repack_bits_bb(1, Nbps, "", False, gr.GR_LSB_FIRST)
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_ff((2*math.pi/M))
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_ff(2*math.pi/M)
         self.blocks_char_to_float_1 = blocks.char_to_float(1, 1)
         self.blocks_char_to_float_0_0 = blocks.char_to_float(1, 1)
         self.blocks_char_to_float_0 = blocks.char_to_float(1, 1)
@@ -263,7 +262,7 @@ class video_homero(gr.top_block, Qt.QWidget):
     def set_M(self, M):
         self.M = M
         self.set_Nbps(int(math.log(self.M,2)))
-        self.blocks_multiply_const_vxx_0.set_k((2*math.pi/self.M))
+        self.blocks_multiply_const_vxx_0.set_k(2*math.pi/self.M)
 
     def get_Rb(self):
         return self.Rb

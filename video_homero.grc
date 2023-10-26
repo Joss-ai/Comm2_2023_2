@@ -289,7 +289,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Amplitude
+    ylabel: "Amplitude sin modulaci\xF3n"
     ymax: '1'
     ymin: '-1'
     yunit: '""'
@@ -386,7 +386,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Amplitude
+    ylabel: Amplitude modulated
     ymax: '1'
     ymin: '-1'
     yunit: '""'
@@ -483,7 +483,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: Amplitude
+    ylabel: Amplitude modulated and escalated
     ymax: '1'
     ymin: '-1'
     yunit: '""'
@@ -507,4 +507,3 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.5.1
