@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: ''
+    author: radiogis_director
     catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
@@ -11,7 +11,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: ModulacionHomero
+    id: top_block
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Not titled yet
+    title: top_block
     window_size: (1000,1000)
   states:
     bus_sink: false
@@ -37,27 +37,27 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '8'
+    value: len(tabla_de_verdad_constelacion )
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [280, 12.0]
-    rotation: 0
-    state: enabled
-- name: Nbps
-  id: variable
-  parameters:
-    comment: ''
-    value: int(math.log(M,2))
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [384, 12.0]
+    coordinate: [460, 15]
     rotation: 0
     state: enabled
 - name: Rb
+  id: variable
+  parameters:
+    comment: ''
+    value: Rs*bps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [717, 18]
+    rotation: 0
+    state: enabled
+- name: Rs
   id: variable
   parameters:
     comment: ''
@@ -69,19 +69,43 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
-- name: Rs
+- name: Sps
   id: variable
   parameters:
     comment: ''
-    value: Rb/Nbps
+    value: '8'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [488, 12.0]
+    coordinate: [806, 19]
     rotation: 0
     state: enabled
-- name: Samp_rate
+- name: bps
+  id: variable
+  parameters:
+    comment: ''
+    value: int(math.log(M,2))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [530, 16]
+    rotation: 0
+    state: enabled
+- name: h
+  id: variable
+  parameters:
+    comment: ''
+    value: '[1]*Sps'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [897, 21]
+    rotation: 0
+    state: enabled
+- name: samp_rate
   id: variable
   parameters:
     comment: ''
@@ -90,56 +114,27 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [952, 12.0]
+    coordinate: [1045, 22]
     rotation: 0
-    state: true
-- name: Sps
+    state: enabled
+- name: tabla_de_verdad_constelacion
   id: variable
   parameters:
     comment: ''
-    value: len(h)
+    value: (0.77+0.77j, -0.77+0.77j, -0.77-0.77j, 0.77-0.77j)
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [864, 12.0]
+    coordinate: [269, 14]
     rotation: 0
-    state: true
-- name: h
-  id: variable
-  parameters:
-    comment: ''
-    value: '[1,-1,1,-1,1,-1,1,-1]'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [696, 12.0]
-    rotation: 0
-    state: true
-- name: analog_const_source_x_0
-  id: analog_const_source_x
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    const: '1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    type: float
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [816, 340.0]
-    rotation: 0
-    state: true
+    state: enabled
 - name: analog_noise_source_x_0
   id: analog_noise_source_x
   parameters:
     affinity: ''
     alias: ''
-    amp: '0.1'
+    amp: '0.2'
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -150,9 +145,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1184, 260.0]
+    coordinate: [772, 245]
     rotation: 0
-    state: enabled
+    state: true
 - name: analog_random_source_x_0
   id: analog_random_source_x
   parameters:
@@ -170,25 +165,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [112, 164.0]
-    rotation: 0
-    state: true
-- name: blocks_add_const_vxx_0
-  id: blocks_add_const_vxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    const: math.pi/M
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    type: float
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [840, 188.0]
+    coordinate: [22, 126]
     rotation: 0
     state: true
 - name: blocks_add_xx_0
@@ -206,110 +183,62 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1424.0, 304]
+    coordinate: [971, 304]
     rotation: 270
-    state: enabled
-- name: blocks_char_to_float_0
-  id: blocks_char_to_float
+    state: true
+- name: blocks_pack_k_bits_bb_0
+  id: blocks_pack_k_bits_bb
   parameters:
     affinity: ''
     alias: ''
     comment: ''
+    k: '8'
     maxoutbuf: '0'
     minoutbuf: '0'
-    scale: '1'
-    vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 188.0]
+    coordinate: [177, 149]
     rotation: 0
     state: true
-- name: blocks_multiply_const_vxx_0
-  id: blocks_multiply_const_vxx
+- name: blocks_packed_to_unpacked_xx_0
+  id: blocks_packed_to_unpacked_xx
   parameters:
     affinity: ''
     alias: ''
+    bits_per_chunk: bps
     comment: ''
-    const: 2*math.pi/M
+    endianness: gr.GR_MSB_FIRST
     maxoutbuf: '0'
     minoutbuf: '0'
-    type: float
-    vlen: '1'
+    num_ports: '1'
+    type: byte
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [664, 188.0]
+    coordinate: [295, 142]
     rotation: 0
     state: true
-- name: blocks_null_sink_0
-  id: blocks_null_sink
+- name: digital_chunks_to_symbols_xx_0
+  id: digital_chunks_to_symbols_xx
   parameters:
     affinity: ''
     alias: ''
-    bus_structure_sink: '[[0,],]'
     comment: ''
-    num_inputs: '1'
-    type: complex
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1512, 408.0]
-    rotation: 0
-    state: disabled
-- name: blocks_repack_bits_bb_0
-  id: blocks_repack_bits_bb
-  parameters:
-    affinity: ''
-    alias: ''
-    align_output: 'False'
-    comment: ''
-    endianness: gr.GR_LSB_FIRST
-    k: '1'
-    l: Nbps
-    len_tag_key: '""'
+    dimension: '1'
+    in_type: byte
     maxoutbuf: '0'
     minoutbuf: '0'
+    num_ports: '1'
+    out_type: complex
+    symbol_table: tabla_de_verdad_constelacion
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 180.0]
-    rotation: 0
-    state: true
-- name: epy_block_0
-  id: epy_block
-  parameters:
-    _source_code: "\nimport numpy as np\nfrom gnuradio import gr\n\n\nclass blk(gr.sync_block):\
-      \  # other base classes are basic_block, decim_block, interp_block\n    \"\"\
-      \"Embedded Python Block example - a simple multiply const\"\"\"\n\n    def __init__(self,\
-      \ example_param=1.0):  # only default arguments here\n        \"\"\"arguments\
-      \ to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
-      \            self,\n            name='VCO complex',   # will show up in GRC\n\
-      \            in_sig=[np.float32, np.float32],\n            out_sig=[np.complex64]\n\
-      \        )\n        # if an attribute with the same name as a parameter is found,\n\
-      \        # a callback is registered (properties work, too).\n        self.example_param\
-      \ = example_param\n\n    def work(self, input_items, output_items):\n      \
-      \  Q=input_items[0]\n        A=input_items[1]\n        sec=output_items[0]\n\
-      \        sec[:] = A*np.exp(1.j*Q)\n        return len(sec)\n"
-    affinity: ''
-    alias: ''
-    comment: ''
-    example_param: '1.0'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-  states:
-    _io_cache: ('VCO complex', 'blk', [('example_param', '1.0')], [('0', 'float',
-      1), ('1', 'float', 1)], [('0', 'complex', 1)], 'Embedded Python Block example
-      - a simple multiply const', ['example_param'])
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1016, 192.0]
+    coordinate: [568, 152]
     rotation: 0
     state: true
 - name: import_0
@@ -322,7 +251,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [600, 12.0]
+    coordinate: [611, 18]
     rotation: 0
     state: true
 - name: interp_fir_filter_xxx_0
@@ -336,12 +265,12 @@ blocks:
     minoutbuf: '0'
     samp_delay: '0'
     taps: h
-    type: ccc
+    type: ccf
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1176, 196.0]
+    coordinate: [852, 140]
     rotation: 0
     state: true
 - name: qtgui_const_sink_x_0
@@ -425,15 +354,15 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    xmax: '6'
-    xmin: '-6'
-    ymax: '6'
-    ymin: '-6'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1496, 540.0]
+    coordinate: [235, 425]
     rotation: 0
     state: true
 - name: qtgui_freq_sink_x_0
@@ -451,10 +380,10 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'True'
+    autoscale: 'False'
     average: '0.05'
     axislabels: 'True'
-    bw: Samp_rate
+    bw: samp_rate
     color1: '"blue"'
     color10: '"dark blue"'
     color2: '"red"'
@@ -514,7 +443,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1520, 324.0]
+    coordinate: [449, 361]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -534,9 +463,9 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     axislabels: 'True'
-    color1: red
+    color1: blue
     color10: dark blue
-    color2: green
+    color2: red
     color3: green
     color4: black
     color5: cyan
@@ -547,7 +476,7 @@ blocks:
     comment: ''
     ctrlpanel: 'False'
     entags: 'True'
-    grid: 'True'
+    grid: 'False'
     gui_hint: ''
     label1: Signal 1
     label10: Signal 10
@@ -572,12 +501,12 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '1'
-    size: 32*Sps//Nbps
-    srate: Rs
+    size: '1024'
+    srate: samp_rate
     stemplot: 'False'
     style1: '1'
     style10: '1'
-    style2: '2'
+    style2: '1'
     style3: '1'
     style4: '1'
     style5: '1'
@@ -611,24 +540,74 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1504, 452.0]
+    coordinate: [237, 489]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [981, 404]
+    rotation: 270
+    state: true
+- name: virtual_sink_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p0
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1095, 285]
+    rotation: 270
+    state: true
+- name: virtual_source_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [66, 445]
+    rotation: 0
+    state: true
+- name: virtual_source_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p0
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [70, 377]
     rotation: 0
     state: true
 
 connections:
-- [analog_const_source_x_0, '0', epy_block_0, '1']
 - [analog_noise_source_x_0, '0', blocks_add_xx_0, '0']
-- [analog_random_source_x_0, '0', blocks_repack_bits_bb_0, '0']
-- [blocks_add_const_vxx_0, '0', epy_block_0, '0']
-- [blocks_add_xx_0, '0', blocks_null_sink_0, '0']
-- [blocks_add_xx_0, '0', qtgui_const_sink_x_0, '0']
-- [blocks_add_xx_0, '0', qtgui_freq_sink_x_0, '0']
-- [blocks_add_xx_0, '0', qtgui_time_sink_x_0, '0']
-- [blocks_char_to_float_0, '0', blocks_multiply_const_vxx_0, '0']
-- [blocks_multiply_const_vxx_0, '0', blocks_add_const_vxx_0, '0']
-- [blocks_repack_bits_bb_0, '0', blocks_char_to_float_0, '0']
-- [epy_block_0, '0', interp_fir_filter_xxx_0, '0']
+- [analog_random_source_x_0, '0', blocks_pack_k_bits_bb_0, '0']
+- [blocks_add_xx_0, '0', virtual_sink_0, '0']
+- [blocks_pack_k_bits_bb_0, '0', blocks_packed_to_unpacked_xx_0, '0']
+- [blocks_packed_to_unpacked_xx_0, '0', digital_chunks_to_symbols_xx_0, '0']
+- [digital_chunks_to_symbols_xx_0, '0', interp_fir_filter_xxx_0, '0']
 - [interp_fir_filter_xxx_0, '0', blocks_add_xx_0, '1']
+- [interp_fir_filter_xxx_0, '0', virtual_sink_0_0, '0']
+- [virtual_source_0, '0', qtgui_const_sink_x_0, '0']
+- [virtual_source_0, '0', qtgui_time_sink_x_0, '0']
+- [virtual_source_0_0, '0', qtgui_freq_sink_x_0, '0']
 
 metadata:
   file_format: 1
