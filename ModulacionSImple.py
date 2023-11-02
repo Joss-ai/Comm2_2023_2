@@ -36,6 +36,8 @@ import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
+from gnuradio.qtgui import Range, RangeWidget
+from PyQt5 import QtCore
 import math
 
 
@@ -78,7 +80,7 @@ class ModulacionSImple(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.Constelacion = Constelacion = (0.7+0.7j, -0.7+0.7j, 0.7-0.7j, -0.7-0.7j)
+        self.Constelacion = Constelacion = (1+1j, -1+1j, -1-1j, 1-1j, 3+3j, -3+3j, -3-3j, 3-3j, 1+3j,-1+3j, 1-3j,-1-3j,-3+1j,-3-1j,3+1j,3-1j)
         self.h = h = (1, 1, 1, 1, 1, 1, 1, 1)
         self.M_niveles = M_niveles = len(Constelacion)
         self.sps = sps = len(h)
@@ -86,10 +88,14 @@ class ModulacionSImple(gr.top_block, Qt.QWidget):
         self.Rs = Rs = 32e3
         self.samp_rate = samp_rate = 32000*sps
         self.Rb = Rb = Rs*bps
+        self.A_noise = A_noise = 0.05
 
         ##################################################
         # Blocks
         ##################################################
+        self._A_noise_range = Range(0, 1, 0.01, 0.05, 200)
+        self._A_noise_win = RangeWidget(self._A_noise_range, self.set_A_noise, "'A_noise'", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._A_noise_win)
         self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
             1024, #size
             samp_rate, #samp_rate
@@ -193,7 +199,7 @@ class ModulacionSImple(gr.top_block, Qt.QWidget):
         self.qtgui_const_sink_x_0.set_y_axis(-2, 2)
         self.qtgui_const_sink_x_0.set_x_axis(-2, 2)
         self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, "")
-        self.qtgui_const_sink_x_0.enable_autoscale(False)
+        self.qtgui_const_sink_x_0.enable_autoscale(True)
         self.qtgui_const_sink_x_0.enable_grid(False)
         self.qtgui_const_sink_x_0.enable_axis_labels(True)
 
@@ -231,7 +237,7 @@ class ModulacionSImple(gr.top_block, Qt.QWidget):
         self.blocks_pack_k_bits_bb_0 = blocks.pack_k_bits_bb(8)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.analog_random_source_x_0 = blocks.vector_source_b(list(map(int, numpy.random.randint(0, 2, 1000))), True)
-        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 0.1, 0)
+        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, A_noise, 0)
 
 
         ##################################################
@@ -313,6 +319,13 @@ class ModulacionSImple(gr.top_block, Qt.QWidget):
 
     def set_Rb(self, Rb):
         self.Rb = Rb
+
+    def get_A_noise(self):
+        return self.A_noise
+
+    def set_A_noise(self, A_noise):
+        self.A_noise = A_noise
+        self.analog_noise_source_x_0.set_amplitude(self.A_noise)
 
 
 
