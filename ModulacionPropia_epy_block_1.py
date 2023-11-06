@@ -15,7 +15,7 @@ class QPSKModulator(gr.sync_block):
         input_data = input_items[0]
         output_data = output_items[0]
 
-        # Mapear los valores de input_data a símbolos QPSK
+        # Mapear los valores de input_data a simbolos QPSK
         constelation = {
             0: 1 + 0j,
             1: 0 + 1j,

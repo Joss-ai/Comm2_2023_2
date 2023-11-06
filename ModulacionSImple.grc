@@ -166,7 +166,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [848, 260.0]
+    coordinate: [696, 252.0]
     rotation: 0
     state: true
 - name: analog_random_source_x_0
@@ -204,7 +204,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1056, 248.0]
+    coordinate: [904, 240.0]
     rotation: 0
     state: true
 - name: blocks_pack_k_bits_bb_0
@@ -220,7 +220,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [176, 172.0]
+    coordinate: [144, 172.0]
     rotation: 0
     state: true
 - name: blocks_packed_to_unpacked_xx_0
@@ -239,7 +239,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [328, 164.0]
+    coordinate: [256, 164.0]
     rotation: 0
     state: true
 - name: digital_chunks_to_symbols_xx_0
@@ -259,7 +259,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [600, 176.0]
+    coordinate: [512, 176.0]
     rotation: 0
     state: enabled
 - name: import_0
@@ -291,7 +291,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 180.0]
+    coordinate: [704, 180.0]
     rotation: 0
     state: true
 - name: qtgui_const_sink_x_0
@@ -574,7 +574,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1152, 260.0]
+    coordinate: [1000, 252.0]
     rotation: 0
     state: true
 - name: virtual_sink_0_0
@@ -587,7 +587,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1152, 188.0]
+    coordinate: [1000, 188.0]
     rotation: 0
     state: true
 - name: virtual_source_0
