@@ -33,6 +33,27 @@ options:
     state: enabled
 
 blocks:
+- name: A_noise
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Amplitud del ruido
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.01'
+    stop: '1'
+    value: '0.01'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1568, 20.0]
+    rotation: 0
+    state: true
 - name: M
   id: variable
   parameters:
@@ -68,6 +89,27 @@ blocks:
     bus_structure: null
     coordinate: [184, 12]
     rotation: 0
+    state: disabled
+- name: Rs
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Rata de simbolo
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: 1e3
+    step: 1e3
+    stop: 200e3
+    value: 32e3
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1296, 20.0]
+    rotation: 0
     state: enabled
 - name: Sps
   id: variable
@@ -93,6 +135,39 @@ blocks:
     coordinate: [530, 16]
     rotation: 0
     state: enabled
+- name: fc
+  id: variable
+  parameters:
+    comment: ''
+    value: 100e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [176, 236.0]
+    rotation: 0
+    state: disabled
+- name: fc
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Frecuencia Central
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: 1e6
+    stop: 100e6
+    value: 1e6
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1424, 20.0]
+    rotation: 0
+    state: true
 - name: h
   id: variable
   parameters:
@@ -105,27 +180,6 @@ blocks:
     coordinate: [897, 21]
     rotation: 0
     state: enabled
-- name: noise
-  id: variable_qtgui_range
-  parameters:
-    comment: ''
-    gui_hint: ''
-    label: Amplitud ruido
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: '0.01'
-    stop: '3'
-    value: '0.01'
-    widget: counter_slider
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1136, 20.0]
-    rotation: 0
-    state: true
 - name: samp_rate
   id: variable
   parameters:
@@ -142,7 +196,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: (0.7+0.7j, 0.7-0.7j, -0.7+0.7j, -0.7-0.7j,1,-1,1j,-1j)
+    value: (3+3j,3+1j,3-1j,3-3j,1+3j,1+1j,1-1j,1-3j,-1+3j,-1+1j,-1-1j,-1-3j,-3+3j,-3+1j,-3-1j,-3-3j)
   states:
     bus_sink: false
     bus_source: false
@@ -155,7 +209,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    amp: noise
+    amp: A_noise
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -166,7 +220,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [772, 245]
+    coordinate: [1200, 500.0]
     rotation: 0
     state: true
 - name: analog_random_source_x_0
@@ -189,6 +243,50 @@ blocks:
     coordinate: [22, 126]
     rotation: 0
     state: true
+- name: analog_sig_source_x_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: ''
+    freq: fc
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: fc*10
+    type: float
+    waveform: analog.GR_COS_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 340.0]
+    rotation: 0
+    state: true
+- name: analog_sig_source_x_0_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: ''
+    freq: fc
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: fc*10
+    type: float
+    waveform: analog.GR_SIN_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 556.0]
+    rotation: 0
+    state: true
 - name: blocks_add_xx_0
   id: blocks_add_xx
   parameters:
@@ -204,8 +302,76 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [971, 304]
+    coordinate: [1400.0, 536]
     rotation: 270
+    state: true
+- name: blocks_complex_to_float_0
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1040, 152.0]
+    rotation: 0
+    state: true
+- name: blocks_float_to_complex_0
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1144, 392.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_xx_0
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [984, 504.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_xx_1
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [976, 296.0]
+    rotation: 0
     state: true
 - name: blocks_pack_k_bits_bb_0
   id: blocks_pack_k_bits_bb
@@ -291,7 +457,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [852, 140]
+    coordinate: [824, 156.0]
     rotation: 0
     state: true
 - name: qtgui_const_sink_x_0
@@ -383,7 +549,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [235, 425]
+    coordinate: [296, 436.0]
     rotation: 0
     state: true
 - name: qtgui_freq_sink_x_0
@@ -420,7 +586,7 @@ blocks:
     fc: '0'
     fftsize: '1024'
     freqhalf: 'True'
-    grid: 'False'
+    grid: 'True'
     gui_hint: ''
     label: Relative Gain
     label1: ''
@@ -464,7 +630,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [449, 361]
+    coordinate: [296, 356.0]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -561,7 +727,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [237, 489]
+    coordinate: [296, 500.0]
     rotation: 0
     state: true
 - name: virtual_sink_0
@@ -574,7 +740,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [981, 404]
+    coordinate: [1412.0, 640]
     rotation: 270
     state: true
 - name: virtual_sink_0_0
@@ -587,15 +753,54 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1095, 285]
+    coordinate: [1524.0, 520]
     rotation: 270
+    state: true
+- name: virtual_sink_0_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p_baseband
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1040, 220.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_1
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Re
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1232, 140.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_1_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Im
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1232, 188.0]
+    rotation: 0
     state: true
 - name: virtual_source_0
   id: virtual_source
   parameters:
     alias: ''
     comment: ''
-    stream_id: p1
+    stream_id: p_baseband
   states:
     bus_sink: false
     bus_source: false
@@ -608,7 +813,7 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    stream_id: p0
+    stream_id: p_baseband
   states:
     bus_sink: false
     bus_source: false
@@ -616,19 +821,55 @@ blocks:
     coordinate: [70, 377]
     rotation: 0
     state: true
+- name: virtual_source_1
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Re
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 292.0]
+    rotation: 0
+    state: true
+- name: virtual_source_1_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Im
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 500.0]
+    rotation: 0
+    state: true
 
 connections:
 - [analog_noise_source_x_0, '0', blocks_add_xx_0, '0']
 - [analog_random_source_x_0, '0', blocks_pack_k_bits_bb_0, '0']
+- [analog_sig_source_x_0, '0', blocks_multiply_xx_1, '1']
+- [analog_sig_source_x_0_0, '0', blocks_multiply_xx_0, '1']
 - [blocks_add_xx_0, '0', virtual_sink_0, '0']
+- [blocks_complex_to_float_0, '0', virtual_sink_1, '0']
+- [blocks_complex_to_float_0, '1', virtual_sink_1_0, '0']
+- [blocks_float_to_complex_0, '0', blocks_add_xx_0, '1']
+- [blocks_float_to_complex_0, '0', virtual_sink_0_0, '0']
+- [blocks_multiply_xx_0, '0', blocks_float_to_complex_0, '1']
+- [blocks_multiply_xx_1, '0', blocks_float_to_complex_0, '0']
 - [blocks_pack_k_bits_bb_0, '0', blocks_packed_to_unpacked_xx_0, '0']
 - [blocks_packed_to_unpacked_xx_0, '0', digital_chunks_to_symbols_xx_0, '0']
 - [digital_chunks_to_symbols_xx_0, '0', interp_fir_filter_xxx_0, '0']
-- [interp_fir_filter_xxx_0, '0', blocks_add_xx_0, '1']
-- [interp_fir_filter_xxx_0, '0', virtual_sink_0_0, '0']
+- [interp_fir_filter_xxx_0, '0', blocks_complex_to_float_0, '0']
+- [interp_fir_filter_xxx_0, '0', virtual_sink_0_0_0, '0']
 - [virtual_source_0, '0', qtgui_const_sink_x_0, '0']
 - [virtual_source_0, '0', qtgui_time_sink_x_0, '0']
 - [virtual_source_0_0, '0', qtgui_freq_sink_x_0, '0']
+- [virtual_source_1, '0', blocks_multiply_xx_1, '0']
+- [virtual_source_1_0, '0', blocks_multiply_xx_0, '0']
 
 metadata:
   file_format: 1

@@ -81,22 +81,26 @@ class top_block(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.tabla_de_verdad_constelacion = tabla_de_verdad_constelacion = (0.7+0.7j, 0.7-0.7j, -0.7+0.7j, -0.7-0.7j,1,-1,1j,-1j)
+        self.tabla_de_verdad_constelacion = tabla_de_verdad_constelacion = (3+3j,3+1j,3-1j,3-3j,1+3j,1+1j,1-1j,1-3j,-1+3j,-1+1j,-1-1j,-1-3j,-3+3j,-3+1j,-3-1j,-3-3j)
         self.M = M = len(tabla_de_verdad_constelacion )
         self.bps = bps = int(math.log(M,2))
         self.Sps = Sps = 8
-        self.Rs = Rs = 32000
+        self.Rs = Rs = 32e3
         self.samp_rate = samp_rate = Rs*Sps
-        self.noise = noise = 0.01
         self.h = h = [1]*Sps
+        self.fc = fc = 1e6
         self.Rb = Rb = Rs*bps
+        self.A_noise = A_noise = 0.01
 
         ##################################################
         # Blocks
         ##################################################
-        self._noise_range = Range(0, 3, 0.01, 0.01, 200)
-        self._noise_win = RangeWidget(self._noise_range, self.set_noise, "Amplitud ruido", "counter_slider", float, QtCore.Qt.Horizontal)
-        self.top_layout.addWidget(self._noise_win)
+        self._fc_range = Range(0, 100e6, 1e6, 1e6, 200)
+        self._fc_win = RangeWidget(self._fc_range, self.set_fc, "Frecuencia Central", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._fc_win)
+        self._A_noise_range = Range(0, 1, 0.01, 0.01, 200)
+        self._A_noise_win = RangeWidget(self._A_noise_range, self.set_A_noise, "Amplitud del ruido", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._A_noise_win)
         self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
             1024, #size
             samp_rate, #samp_rate
@@ -162,7 +166,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.qtgui_freq_sink_x_0.set_y_label('Relative Gain', 'dB')
         self.qtgui_freq_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
         self.qtgui_freq_sink_x_0.enable_autoscale(False)
-        self.qtgui_freq_sink_x_0.enable_grid(False)
+        self.qtgui_freq_sink_x_0.enable_grid(True)
         self.qtgui_freq_sink_x_0.set_fft_average(0.05)
         self.qtgui_freq_sink_x_0.enable_axis_labels(True)
         self.qtgui_freq_sink_x_0.enable_control_panel(False)
@@ -236,9 +240,18 @@ class top_block(gr.top_block, Qt.QWidget):
         self.digital_chunks_to_symbols_xx_0 = digital.chunks_to_symbols_bc(tabla_de_verdad_constelacion, 1)
         self.blocks_packed_to_unpacked_xx_0 = blocks.packed_to_unpacked_bb(bps, gr.GR_MSB_FIRST)
         self.blocks_pack_k_bits_bb_0 = blocks.pack_k_bits_bb(8)
+        self.blocks_multiply_xx_1 = blocks.multiply_vff(1)
+        self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
+        self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
+        self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
+        self.analog_sig_source_x_0_0 = analog.sig_source_f(fc*10, analog.GR_SIN_WAVE, fc, 1, 0, 0)
+        self.analog_sig_source_x_0 = analog.sig_source_f(fc*10, analog.GR_COS_WAVE, fc, 1, 0, 0)
         self.analog_random_source_x_0 = blocks.vector_source_b(list(map(int, numpy.random.randint(0, 2, 1000))), True)
-        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, noise, 0)
+        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, A_noise, 0)
+        self._Rs_range = Range(1e3, 200e3, 1e3, 32e3, 200)
+        self._Rs_win = RangeWidget(self._Rs_range, self.set_Rs, "Rata de simbolo", "counter_slider", float, QtCore.Qt.Horizontal)
+        self.top_layout.addWidget(self._Rs_win)
 
 
         ##################################################
@@ -246,13 +259,20 @@ class top_block(gr.top_block, Qt.QWidget):
         ##################################################
         self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 0))
         self.connect((self.analog_random_source_x_0, 0), (self.blocks_pack_k_bits_bb_0, 0))
-        self.connect((self.blocks_add_xx_0, 0), (self.qtgui_const_sink_x_0, 0))
-        self.connect((self.blocks_add_xx_0, 0), (self.qtgui_time_sink_x_0, 0))
+        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_multiply_xx_1, 1))
+        self.connect((self.analog_sig_source_x_0_0, 0), (self.blocks_multiply_xx_0, 1))
+        self.connect((self.blocks_complex_to_float_0, 1), (self.blocks_multiply_xx_0, 0))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.blocks_multiply_xx_1, 0))
+        self.connect((self.blocks_float_to_complex_0, 0), (self.blocks_add_xx_0, 1))
+        self.connect((self.blocks_multiply_xx_0, 0), (self.blocks_float_to_complex_0, 1))
+        self.connect((self.blocks_multiply_xx_1, 0), (self.blocks_float_to_complex_0, 0))
         self.connect((self.blocks_pack_k_bits_bb_0, 0), (self.blocks_packed_to_unpacked_xx_0, 0))
         self.connect((self.blocks_packed_to_unpacked_xx_0, 0), (self.digital_chunks_to_symbols_xx_0, 0))
         self.connect((self.digital_chunks_to_symbols_xx_0, 0), (self.interp_fir_filter_xxx_0, 0))
-        self.connect((self.interp_fir_filter_xxx_0, 0), (self.blocks_add_xx_0, 1))
+        self.connect((self.interp_fir_filter_xxx_0, 0), (self.blocks_complex_to_float_0, 0))
+        self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_const_sink_x_0, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_freq_sink_x_0, 0))
+        self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_0, 0))
 
 
     def closeEvent(self, event):
@@ -309,13 +329,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.qtgui_freq_sink_x_0.set_frequency_range(0, self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
 
-    def get_noise(self):
-        return self.noise
-
-    def set_noise(self, noise):
-        self.noise = noise
-        self.analog_noise_source_x_0.set_amplitude(self.noise)
-
     def get_h(self):
         return self.h
 
@@ -323,11 +336,28 @@ class top_block(gr.top_block, Qt.QWidget):
         self.h = h
         self.interp_fir_filter_xxx_0.set_taps(self.h)
 
+    def get_fc(self):
+        return self.fc
+
+    def set_fc(self, fc):
+        self.fc = fc
+        self.analog_sig_source_x_0.set_sampling_freq(self.fc*10)
+        self.analog_sig_source_x_0.set_frequency(self.fc)
+        self.analog_sig_source_x_0_0.set_sampling_freq(self.fc*10)
+        self.analog_sig_source_x_0_0.set_frequency(self.fc)
+
     def get_Rb(self):
         return self.Rb
 
     def set_Rb(self, Rb):
         self.Rb = Rb
+
+    def get_A_noise(self):
+        return self.A_noise
+
+    def set_A_noise(self, A_noise):
+        self.A_noise = A_noise
+        self.analog_noise_source_x_0.set_amplitude(self.A_noise)
 
 
 
