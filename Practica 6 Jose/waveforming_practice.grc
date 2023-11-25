@@ -136,7 +136,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: 40e3
   states:
     bus_sink: false
     bus_source: false
@@ -193,7 +193,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: digital.constellation_8psk().points()
+    value: digital.constellation_16qam().points()
   states:
     bus_sink: false
     bus_source: false
@@ -224,7 +224,7 @@ blocks:
     bus_structure: null
     coordinate: [1328, 116.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: h
   id: variable
   parameters:
@@ -236,7 +236,7 @@ blocks:
     bus_structure: null
     coordinate: [1496, 116.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: ntaps
   id: variable
   parameters:
